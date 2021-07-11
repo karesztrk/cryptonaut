@@ -1,0 +1,103 @@
+---
+// https://www.coingecko.com/en/api#explore-api
+const result = await fetch('https://api.coingecko.com/api/v3/coins/markets?vs_currency=eur&order=market_cap_desc&per_page=100&page=1&sparkline=false')
+  .then((res) => res.json());
+
+const localizePrice = (num) => (num ? String(num).replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1 ') : '');
+
+const formatPercentage = (value, decimals = 2) => {
+  const mod = decimals !== 0 ? 10 ** decimals : 1;
+  return Math.round(value * mod) / mod;
+};
+
+const toPercent = (text) => text;
+
+const data = result.map(item => ({
+  name: item.name,
+  symbol: item.symbol.toUpperCase(),
+  price: localizePrice(item.current_price),
+  cap: localizePrice(item.market_cap),
+  change: formatPercentage(item.price_change_percentage_24h),
+}))
+---
+<article>
+    <div class="banner">
+        <p><strong>💰🚀 Interested in about the current crypto values?</strong> Check them below👀👇</p>
+    </div>
+
+    <section>
+        <h2>Cryptos</h2>
+        
+        <div class="crypto-table">
+            <div class="crypto-header crypto-name">Name</div>
+            <div class="crypto-header crypto-symbol">Symbol</div>
+            <div class="crypto-header crypto-price">Price</div>
+            <div class="crypto-header crypto-cap">Market Cap</div>
+            <div class="crypto-header crypto-change">Change</div>
+          {data.map(row => {
+            const changeClass = `crypto-change crypto-change__${row.change >= 0 ? 'increased' : 'decreased'}`;
+            return (
+              <>
+                <div class="crypto-name">{row.name}</div>
+                <div class="crypto-symbol">{row.symbol}</div>
+                <div class="crypto-price">{row.price} &euro;</div>
+                <div class="crypto-cap">{row.cap} &euro;</div>
+                <div class={changeClass}>{row.change} &percnt;</div>
+              </>
+            )
+          })}
+        </div>
+    </section>
+    
+</article>
+
+<style>
+    article {
+        padding-top: 2em;
+        line-height: 1.5;
+    }
+    section {
+        margin-top: 2em;
+        display: flex;
+        flex-direction: column;
+        gap: 1em;
+        max-width: 800px;
+    }
+
+    .banner {
+        text-align: center;
+        font-size: 1.2rem;
+        background: var(--color-light);
+        padding: 1em 1.5em;
+        padding-left: 0.75em;
+        border-radius: 4px;
+    }
+
+    .crypto-table {
+        display: grid;
+        grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
+        gap: 0.5em;
+        justify-items: center;
+    }
+
+    .crypto-header {
+      font-size: 1.5em;
+      font-weight: bold;
+    }
+    
+    .crypto-name {
+      justify-self: left;
+    }
+
+    .crypto-change {
+      justify-self: right;
+    }
+
+    .crypto-change__increased {
+      color: chartreuse;
+    }
+
+    .crypto-change__decreased {
+      color: orangered;
+    }
+</style>
