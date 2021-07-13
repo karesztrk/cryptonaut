@@ -1,16 +1,8 @@
 ---
+import { formatPercentage, localizePrice } from '../util/index';
 // https://www.coingecko.com/en/api#explore-api
 const result = await fetch('https://api.coingecko.com/api/v3/coins/markets?vs_currency=eur&order=market_cap_desc&per_page=100&page=1&sparkline=false')
   .then((res) => res.json());
-
-const localizePrice = (num) => (num ? String(num).replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1 ') : '');
-
-const formatPercentage = (value, decimals = 2) => {
-  const mod = decimals !== 0 ? 10 ** decimals : 1;
-  return Math.round(value * mod) / mod;
-};
-
-const toPercent = (text) => text;
 
 const data = result.map(item => ({
   name: item.name,
@@ -18,6 +10,7 @@ const data = result.map(item => ({
   price: localizePrice(item.current_price),
   cap: localizePrice(item.market_cap),
   change: formatPercentage(item.price_change_percentage_24h),
+  link: `/symbol/${item.symbol}`
 }))
 ---
 <article>
@@ -38,7 +31,11 @@ const data = result.map(item => ({
             const changeClass = `crypto-change crypto-change__${row.change >= 0 ? 'increased' : 'decreased'}`;
             return (
               <>
-                <div class="crypto-name">{row.name}</div>
+                <div class="crypto-name">
+                  <a href={row.link}>
+                    {row.name}
+                  </a>
+                </div>
                 <div class="crypto-symbol">{row.symbol}</div>
                 <div class="crypto-price">{row.price} &euro;</div>
                 <div class="crypto-cap">{row.cap} &euro;</div>

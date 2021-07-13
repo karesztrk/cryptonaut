@@ -1,0 +1,194 @@
+---
+import { formatPercentage, localizePrice } from '../util/index';
+const { collection } = Astro.props;
+
+export async function createCollection() {
+  const response = await fetch('https://api.coingecko.com/api/v3/coins/markets?vs_currency=eur&order=market_cap_desc&per_page=100&page=1&sparkline=false');
+  const result = await response.json();
+  return {
+    routes: result.map(({ symbol }) => {
+      return {
+        symbol
+      };
+    }),
+    permalink: ({ params: { symbol } }) => `/symbol/${symbol}`,
+    async data({ params: { symbol } }) {
+      return result
+        .filter((item) => item.symbol === symbol)
+        .map(item => ({
+          ...item,
+          name: item.name,
+          symbol: item.symbol.toUpperCase(),
+          current_price: localizePrice(item.current_price),
+          market_cap: localizePrice(item.market_cap),
+          fully_diluted_valuation: localizePrice(item.fully_diluted_valuation),
+          total_volume: localizePrice(item.total_volume),
+          high_24h: localizePrice(item.high_24h),
+          low_24h: localizePrice(item.low_24h),
+          price_change_percentage_24h: formatPercentage(item.price_change_percentage_24h),
+          price_change_24h: localizePrice(item.price_change_24h),
+          price_change_percentage_24h: formatPercentage(item.price_change_percentage_24h),
+          market_cap_change_24h: localizePrice(item.market_cap_change_24h),
+          market_cap_change_percentage_24h: formatPercentage(item.market_cap_change_percentage_24h),
+          circulating_supply: localizePrice(item.circulating_supply),
+          total_supply: localizePrice(item.total_supply),
+          max_supply: localizePrice(item.max_supply),
+          ath: localizePrice(item.ath),
+          ath_change_percentage: formatPercentage(item.ath_change_percentage),
+          ath_date: new Date(item.ath_date),
+          atl: localizePrice(item.atl),
+          atl_change_percentage: 54282.45578,
+          atl_date: new Date(item.atl_date),
+          roi: null,
+          last_updated: new Date(item.last_updated),
+          image: item.image
+        }));
+    },
+    pageSize: Infinity,
+  };
+}
+---
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Cryptonaut</title>
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg">
+    <link rel="stylesheet" href="/style/global.css">
+    <link rel="stylesheet" href="/style/home.css">
+</head>
+<body>
+  <main>
+      <header>
+          <div>
+              <img width="60" height="80" src="/assets/logo.svg" alt="Cryptonaut logo">
+              <h1>Cryptocurrency <span>{collection.data[0].name}</span>
+              <img src={collection.data[0].image} /></h1>
+          </div>
+      </header>
+
+      <article>
+        <section>
+          <h2>Details</h2>
+          <div>
+            <p>
+              <strong>symbol</strong>
+              &nbsp;
+              <span>{collection.data[0].symbol}</span>
+            </p>
+            <p>
+              <strong>current_price</strong>
+              &nbsp;
+              <span>{collection.data[0].current_price} &euro;</span>
+            </p>
+            <p>
+              <strong>market_cap</strong>
+              &nbsp;
+              <span>{collection.data[0].market_cap} &euro;</span>
+            </p>
+            <p>
+              <strong>market_cap_rank</strong>
+              &nbsp;
+              <span>{collection.data[0].market_cap_rank}</span>
+            </p>
+            <p>
+              <strong>fully_diluted_valuation</strong>
+              &nbsp;
+              <span>{collection.data[0].fully_diluted_valuation} &euro;</span>
+            </p>
+            <p>
+              <strong>total_volume</strong>
+              &nbsp;
+              <span>{collection.data[0].total_volume} &euro;</span>
+            </p>
+            <p>
+              <strong>high_24h</strong>
+              &nbsp;
+              <span>{collection.data[0].high_24h} &euro;</span>
+            </p>
+            <p>
+              <strong>low_24h</strong>
+              &nbsp;
+              <span>{collection.data[0].low_24h} &euro;</span>
+            </p>
+            <p>
+              <strong>price_change_24h</strong>
+              &nbsp;
+              <span>{collection.data[0].price_change_24h} &euro;</span>
+            </p>
+            <p>
+              <strong>price_change_percentage_24h</strong>
+              &nbsp;
+              <span>{collection.data[0].price_change_percentage_24h} &percnt;</span>
+            </p>
+            <p>
+              <strong>market_cap_change_24h</strong>
+              &nbsp;
+              <span>{collection.data[0].market_cap_change_24h} &euro;</span>
+            </p>
+            <p>
+              <strong>market_cap_change_percentage_24h</strong>
+              &nbsp;
+              <span>{collection.data[0].market_cap_change_percentage_24h} &percnt;</span>
+            </p>
+            <p>
+              <strong>circulating_supply</strong>
+              &nbsp;
+              <span>{collection.data[0].circulating_supply} &euro;</span>
+            </p>
+            <p>
+              <strong>total_supply</strong>
+              &nbsp;
+              <span>{collection.data[0].total_supply} &euro;</span>
+            </p>
+            <p>
+              <strong>max_supply</strong>
+              &nbsp;
+              <span>{collection.data[0].max_supply} &euro;</span>
+            </p>
+            <p>
+              <strong>ath</strong>
+              &nbsp;
+              <span>{collection.data[0].ath} &euro;</span>
+            </p>
+            <p>
+              <strong>ath_change_percentage</strong>
+              &nbsp;
+              <span>{collection.data[0].ath_change_percentage} &percnt;</span>
+            </p>
+            <p>
+              <strong>ath_date</strong>
+              &nbsp;
+              <span>{collection.data[0].ath_date}</span>
+            </p>
+            <p>
+              <strong>atl</strong>
+              &nbsp;
+              <span>{collection.data[0].atl} &euro;</span>
+            </p>
+            <p>
+              <strong>atl_change_percentage</strong>
+              &nbsp;
+              <span>{collection.data[0].atl_change_percentage} &percnt;</span>
+            </p>
+            <p>
+              <strong>atl_date</strong>
+              &nbsp;
+              <span>{collection.data[0].atl_date}</span>
+            </p>
+            <p>
+              <strong>roi</strong>
+              &nbsp;
+              <span>{collection.data[0].roi} &euro;</span>
+            </p>
+            <p>
+              <strong>last_updated</strong>
+              &nbsp;
+              <span>{collection.data[0].last_updated}</span>
+            </p>
+          </div>
+        </section>
+      </article>
+  </main>
+</body>
+</html>

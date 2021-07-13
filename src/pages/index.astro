@@ -9,15 +9,6 @@ import StatusTable from '../components/StatusTable.astro';
     <link rel="icon" type="image/svg+xml" href="/favicon.svg">
     <link rel="stylesheet" href="/style/global.css">
     <link rel="stylesheet" href="/style/home.css">
-
-    <style>
-        header {
-            display: flex;
-            flex-direction: column;
-            gap: 1em;
-            max-width: min(100%, 68ch);
-        }
-    </style>
 </head>
 <body>
     <main>
@@ -29,15 +20,6 @@ import StatusTable from '../components/StatusTable.astro';
         </header>
 
         <StatusTable />
-
-        <!--
-           - You can also use imported framework components directly in your markup!
-           -
-           - Note: by default, these components are NOT interactive on the client.
-           - The `:visible` directive tells Astro to make it interactive.
-           -
-           - See https://github.com/snowpackjs/astro/blob/main/docs/core-concepts/component-hydration.md 
-           -->
 
     </main>
 </body>

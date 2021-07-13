@@ -14,6 +14,10 @@ a {
 }
 
 header {
+    display: flex;
+    flex-direction: column;
+    gap: 1em;
+    max-width: min(100%, 68ch);
     margin: 0 auto;
 }
 
@@ -31,9 +35,15 @@ header h1 {
     font-size: 1em;
     font-weight: 500;
 }
-header img {
+header img:first-child {
     width: 2em;
     height: 2.667em;
+}
+
+header img:nth-child(2) {
+    margin-left: 10px;
+    width: 0.75em;
+    height: 0.75em;
 }
 
 header span {
@@ -41,6 +51,7 @@ header span {
 }
 
 h2 {
+    margin-top: 1.5em;
     font-weight: 500;
     font-size: clamp(1.5rem, 1rem + 1.25vw, 2rem);
 }
