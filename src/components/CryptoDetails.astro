@@ -1,0 +1,149 @@
+---
+interface Details {
+    symbol: string;
+    current_price: string;
+    market_cap: string;
+    market_cap_rank: string;
+    fully_diluted_valuation: string;
+    total_volume: string;
+    high_24h: string;
+    low_24h: string;
+    price_change_24h: string;
+    price_change_percentage_24h: string;
+    market_cap_change_24h: string;
+    market_cap_change_percentage_24h: string;
+    circulating_supply: string;
+    total_supply: string;
+    max_supply: string;
+    ath: string;
+    ath_change_percentage: string;
+    ath_date: string;
+    atl: string;
+    atl_change_percentage: string;
+    atl_date: string;
+    roi: string;
+    last_updated: string;
+}
+
+export interface Props {
+  details: Details;
+}
+const { details } = Astro.props;
+---
+<div>
+  <p>
+    <strong>symbol</strong>
+    &nbsp;
+    <span>{details.symbol}</span>
+  </p>
+  <p>
+    <strong>current_price</strong>
+    &nbsp;
+    <span>{details.current_price} &euro;</span>
+  </p>
+  <p>
+    <strong>market_cap</strong>
+    &nbsp;
+    <span>{details.market_cap} &euro;</span>
+  </p>
+  <p>
+    <strong>market_cap_rank</strong>
+    &nbsp;
+    <span>{details.market_cap_rank}</span>
+  </p>
+  <p>
+    <strong>fully_diluted_valuation</strong>
+    &nbsp;
+    <span>{details.fully_diluted_valuation} &euro;</span>
+  </p>
+  <p>
+    <strong>total_volume</strong>
+    &nbsp;
+    <span>{details.total_volume} &euro;</span>
+  </p>
+  <p>
+    <strong>high_24h</strong>
+    &nbsp;
+    <span>{details.high_24h} &euro;</span>
+  </p>
+  <p>
+    <strong>low_24h</strong>
+    &nbsp;
+    <span>{details.low_24h} &euro;</span>
+  </p>
+  <p>
+    <strong>price_change_24h</strong>
+    &nbsp;
+    <span>{details.price_change_24h} &euro;</span>
+  </p>
+  <p>
+    <strong>price_change_percentage_24h</strong>
+    &nbsp;
+    <span>{details.price_change_percentage_24h} &percnt;</span>
+  </p>
+  <p>
+    <strong>market_cap_change_24h</strong>
+    &nbsp;
+    <span>{details.market_cap_change_24h} &euro;</span>
+  </p>
+  <p>
+    <strong>market_cap_change_percentage_24h</strong>
+    &nbsp;
+    <span>{details.market_cap_change_percentage_24h} &percnt;</span>
+  </p>
+  <p>
+    <strong>circulating_supply</strong>
+    &nbsp;
+    <span>{details.circulating_supply} &euro;</span>
+  </p>
+  <p>
+    <strong>total_supply</strong>
+    &nbsp;
+    <span>{details.total_supply} &euro;</span>
+  </p>
+  <p>
+    <strong>max_supply</strong>
+    &nbsp;
+    <span>{details.max_supply} &euro;</span>
+  </p>
+  <p>
+    <strong>ath</strong>
+    &nbsp;
+    <span>{details.ath} &euro;</span>
+  </p>
+  <p>
+    <strong>ath_change_percentage</strong>
+    &nbsp;
+    <span>{details.ath_change_percentage} &percnt;</span>
+  </p>
+  <p>
+    <strong>ath_date</strong>
+    &nbsp;
+    <span>{details.ath_date}</span>
+  </p>
+  <p>
+    <strong>atl</strong>
+    &nbsp;
+    <span>{details.atl} &euro;</span>
+  </p>
+  <p>
+    <strong>atl_change_percentage</strong>
+    &nbsp;
+    <span>{details.atl_change_percentage} &percnt;</span>
+  </p>
+  <p>
+    <strong>atl_date</strong>
+    &nbsp;
+    <span>{details.atl_date}</span>
+  </p>
+  <p>
+    <strong>roi</strong>
+    &nbsp;
+    <span>{details.roi} &euro;</span>
+  </p>
+  <p>
+    <strong>last_updated</strong>
+    &nbsp;
+    <span>{details.last_updated}</span>
+  </p>
+</div>
